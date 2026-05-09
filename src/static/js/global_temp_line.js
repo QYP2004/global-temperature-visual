@@ -4,14 +4,14 @@
   const minYearInput = document.getElementById("minYear");
   const reloadBtn = document.getElementById("reloadBtn");
 
-  const cityChartDom = document.getElementById("cityTempChart");
-  const cityMsgDom = document.getElementById("cityMsg");
-  const cityYearInput = document.getElementById("cityYear");
-  const cityLimitInput = document.getElementById("cityLimit");
-  const reloadCityBtn = document.getElementById("reloadCityBtn");
+  const stateChartDom = document.getElementById("stateTempChart");
+  const stateMsgDom = document.getElementById("stateMsg");
+  const stateYearInput = document.getElementById("stateYear");
+  const countrySelect = document.getElementById("countrySelect");
+  const reloadStateBtn = document.getElementById("reloadStateBtn");
 
   const globalChart = echarts.init(globalChartDom);
-  const cityChart = echarts.init(cityChartDom);
+  const stateChart = echarts.init(stateChartDom);
 
   function setMessage(dom, text, isError) {
     dom.textContent = text || "";
@@ -74,26 +74,27 @@
     }
   }
 
-  async function loadCityTemp() {
-    const year = Number(cityYearInput.value || 2013);
-    const limit = Number(cityLimitInput.value || 20);
-    setMessage(cityMsgDom, "加载中...", false);
+  async function loadStateTemp() {
+    const year = Number(stateYearInput.value || 2013);
+    const country = countrySelect.value;
+    const limit = 15;
+    setMessage(stateMsgDom, "加载中...", false);
 
     try {
-      const resp = await fetch(`/api/city-temp?year=${year}&limit=${limit}`);
+      const resp = await fetch(`/api/state-temp?year=${year}&country=${encodeURIComponent(country)}&limit=${limit}`);
       const data = await resp.json();
       if (!resp.ok) {
         throw new Error(data.error || "请求失败");
       }
 
       const option = {
-        title: { text: `${year} 年城市平均温度（按温度排序）`, left: "center" },
+        title: { text: `${year} 年 ${country} 州/省平均温度（按温度排序）`, left: "center" },
         tooltip: { trigger: "axis", axisPointer: { type: "shadow" } },
         grid: { left: 60, right: 20, top: 60, bottom: 80 },
         xAxis: {
           type: "category",
-          name: "城市",
-          data: data.cities,
+          name: "州/省",
+          data: data.states,
           axisLabel: { interval: 0, rotate: 30 },
         },
         yAxis: {
@@ -112,21 +113,21 @@
         ],
       };
 
-      cityChart.setOption(option, true);
-      setMessage(cityMsgDom, "加载完成，共 " + data.count + " 个城市。", false);
+      stateChart.setOption(option, true);
+      setMessage(stateMsgDom, "加载完成，共 " + data.count + " 个州/省。", false);
     } catch (err) {
-      setMessage(cityMsgDom, "加载失败：" + err.message, true);
+      setMessage(stateMsgDom, "加载失败：" + err.message, true);
     }
   }
 
   reloadBtn.addEventListener("click", loadGlobalTemp);
-  reloadCityBtn.addEventListener("click", loadCityTemp);
+  reloadStateBtn.addEventListener("click", loadStateTemp);
 
   window.addEventListener("resize", function () {
     globalChart.resize();
-    cityChart.resize();
+    stateChart.resize();
   });
 
   loadGlobalTemp();
-  loadCityTemp();
+  loadStateTemp();
 })();

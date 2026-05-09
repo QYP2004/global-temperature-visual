@@ -88,6 +88,31 @@ class DataEngine:
         grouped["temperature"] = grouped["temperature"].astype("float64")
         return grouped
 
+    def get_state_temp_by_year(self, year: int, country: str, limit: int = 15) -> pd.DataFrame:
+        """按年份和国家计算各州/省平均温度，返回列：State, temperature"""
+        df = self._load_csv("GlobalLandTemperaturesByState.csv")
+
+        filtered = df.loc[
+            (df["year"] == year)
+            & (df["Country"] == country)
+            & df["AverageTemperature"].notna(),
+            ["State", "AverageTemperature"],
+        ]
+        if filtered.empty:
+            return filtered.assign(temperature=pd.Series(dtype="float64"))
+
+        grouped = (
+            filtered.groupby("State", as_index=False)["AverageTemperature"]
+            .mean()
+            .rename(columns={"AverageTemperature": "temperature"})
+            .sort_values("temperature", ascending=False)
+            .head(limit)
+            .reset_index(drop=True)
+        )
+
+        grouped["temperature"] = grouped["temperature"].astype("float64")
+        return grouped
+
 
 if __name__ == "__main__":
     engine = DataEngine()

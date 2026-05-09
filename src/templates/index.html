@@ -29,16 +29,24 @@
             <div id="globalTempChart" style="width: 100%; height: 520px"></div>
             <div id="msg" class="msg"></div>
 
-            <h1>城市年平均温度柱状图</h1>
+            <h1>州省年平均温度柱状图</h1>
             <div class="toolbar">
-                <label for="cityYear">年份：</label>
-                <input id="cityYear" type="number" value="2013" min="1700" max="2100" />
-                <label for="cityLimit">城市数量：</label>
-                <input id="cityLimit" type="number" value="20" min="5" max="50" />
-                <button id="reloadCityBtn">刷新城市图</button>
+                <label for="stateYear">年份：</label>
+                <input id="stateYear" type="number" value="2013" min="1700" max="2100" />
+                <label for="countrySelect">国家：</label>
+                <select id="countrySelect">
+                    <option value="Brazil">Brazil</option>
+                    <option value="Russia">Russia</option>
+                    <option value="United States">United States</option>
+                    <option value="Canada">Canada</option>
+                    <option value="India">India</option>
+                    <option value="China">China</option>
+                    <option value="Australia">Australia</option>
+                </select>
+                <button id="reloadStateBtn">刷新州省图</button>
             </div>
-            <div id="cityTempChart" style="width: 100%; height: 520px"></div>
-            <div id="cityMsg" class="msg"></div>
+            <div id="stateTempChart" style="width: 100%; height: 520px"></div>
+            <div id="stateMsg" class="msg"></div>
         </div>
 
         <script src="{{ url_for('static', filename='js/global_temp_line.js') }}"></script>
