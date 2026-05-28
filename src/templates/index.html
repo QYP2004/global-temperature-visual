@@ -80,17 +80,10 @@
                 </select></label>
                 <button id="reloadCityBtn">刷新</button>
             </div>
-            <div class="card-status" id="statusCity">⏳ 等待加载</div>
-            <div style="display:none"> <!-- placeholder to keep layout -->
-            </div>
-        </section>
-    </main>
+            <div id="stateTempChart" style="width: 100%; height: 520px"></div>
+            <div id="stateMsg" class="msg"></div>
+        </div>
 
-    <footer class="footer">
-        数据来源：Berkeley Earth &nbsp;|&nbsp; 数据范围：1750–2013
-    </footer>
-
-        <script src="/static/js/dashboard.js"></script>
-        <script src="/static/js/city-temp-chart.js"></script>
-</body>
+        <script src="{{ url_for('static', filename='js/global_temp_line.js') }}"></script>
+    </body>
 </html>
