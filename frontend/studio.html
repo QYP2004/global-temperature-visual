@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>演播厅 · AI 圆桌</title>
+  <link rel="stylesheet" href="/css/styles.css" />
+</head>
+<body>
+  <div class="studio">
+    <div class="studio-top">
+      <a href="/" class="btn-ghost">← 返回</a>
+      <span class="topic" id="topicTitle">加载中…</span>
+      <span class="live-dot off" id="liveDot"></span>
+      <span id="statusText" style="color:var(--muted);font-size:12px;"></span>
+    </div>
+
+    <div class="studio-main">
+      <!-- expert windows -->
+      <section class="panel guests">
+        <div class="panel-head"><span>嘉宾席</span><span id="guestCount"></span></div>
+        <div class="panel-body" id="guestList"></div>
+      </section>
+
+      <!-- transcript -->
+      <section class="panel">
+        <div class="panel-head"><span>现场实录</span><span id="msgCount"></span></div>
+        <div class="panel-body" id="transcript"></div>
+      </section>
+
+      <!-- consensus / divergence -->
+      <section class="panel">
+        <div class="panel-head"><span>共识与分歧</span></div>
+        <div class="panel-body" id="cdPanel">
+          <div style="font-size:12px;color:var(--muted);margin-bottom:6px;">共识</div>
+          <div id="consensus"></div>
+          <div style="font-size:12px;color:var(--muted);margin:12px 0 6px;">分歧</div>
+          <div id="divergence"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <script src="/js/studio.js"></script>
+</body>
+</html>
